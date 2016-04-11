@@ -83,10 +83,17 @@ liip_imagine:
     resolvers:
        default:
           web_path: ~
-
+    loaders:
+        default:
+            filesystem:
+                data_root:  '%kernel.root_dir%/../web'
     filter_sets:
         cache: ~
         my_thumb:
             quality: 75
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
+        gallery:
+            quality: 75
+            filters:
+                thumbnail: { size: [600, 300], mode: outbound }

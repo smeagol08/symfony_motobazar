@@ -342,33 +342,51 @@ class Advertisement
         return $this->headers;
     }
 
+	/**
+	 * @param Collection $photos
+	 * return $this
+	 */
+    public function setPhotos(Collection $photos)
+    {
+    	$this->photos= $photos;
+    	return $this;
+    }
+
+
+
     /**
-     * Add photos
+     * Add photo
      *
-     * @param \AppBundle\Entity\Photo $photos
+     * @param \AppBundle\Entity\Photo $photo
+     *
      * @return Advertisement
      */
-    public function addPhoto(\AppBundle\Entity\Photo $photos)
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
     {
-        $this->photos[] = $photos;
-
-        return $this;
+        if(! $this->photos->contains( $photo)){
+        	$photo->setAdvertisement($this);
+        	$this->photos->add($photo);
+        }
+        return $this->photos;
     }
 
     /**
-     * Remove photos
+     * Remove photo
      *
-     * @param \AppBundle\Entity\Photo $photos
+     * @param \AppBundle\Entity\Photo $photo
      */
-    public function removePhoto(\AppBundle\Entity\Photo $photos)
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
     {
-        $this->photos->removeElement($photos);
+        if( $this->photos->contains($photo)){
+        		$this->photos->removeElement($photo);
+        }
+        return $this->photos;
     }
 
     /**
      * Get photos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhotos()
     {
@@ -397,4 +415,6 @@ class Advertisement
     {
         return $this->condition;
     }
+    
+    
 }

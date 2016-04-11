@@ -37,45 +37,25 @@
     	</div>
 		<div class="col-md-10">
 		  <h3>Ogłoszenia:</h3>       
-		  <table class="table">
-		    <thead>
-		      <tr>
-		        <th>MINIATURKA</th>     
-		        <th>DODANO</th>
-		        <th>TYTUŁ</th>
-		        <th>KATEGORIA</th>
-		        <th>TYP</th>
-		        <th>STAN</th>
-		        <th>CENA</th>
-		        <th>LOKALIZACJA</th>
-		        <th>DODAŁ</th>
-		      </tr>
-		    </thead>
+		  <table class="table table-striped">
+
 		    <tbody>
 				{% for ad in adverts %}
-				<tr>
+				<tr >
 					{% for ph in ad.photos %}
-							 {% if loop.first %}
-								<td style= "align: center"><img src="{{ ph.getWebPath |  imagine_filter('my_thumb') }}"/></td>
+							{% if loop.first %}
+								<td><img src="{{ ph.getWebPath |  imagine_filter('my_thumb') }}"/></td>
 							{% endif %}
 						{% endfor %}
-					<td>{{ ad.created|date("m/d/Y") }}</td>
 					<td><a href="{{ path('show_adv', { 'id': ad.id }) }}">{{ ad.title }}</a></td>
+					<td>{{ ad.created|date("m/d/Y") }}</td>
 					<td>{{ ad.category }}</td>
-					<td>{{ ad.type }}</td>
 					<td>{{ ad.condition }}</td>
 					<td>{{ ad.price }}</td>
+					<td>{{ ad.user}}</td>
+					<td>{{ ad.type }}</td>		
 					<td>{{ ad.location }}</td>
-					<td>
-						<ul class="nav nav-pills">
-							<li class="dropdown">
-					  			<a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ ad.user}}</a>
-					  			<ul class="dropdown-menu" id="menu1">
-					   				 <li><a href="{{ path('new_msg', { 'id': ad.id }) }}">Odpowiedz</a></li>
-					  			</ul>
-							</li>	
-						</ul>	
-					</td>
+
 				</tr>
 		   		{% endfor %}
 		    </tbody>

@@ -75,6 +75,26 @@ class MessageController extends Controller
     }
     
     /**
+     * @Route("message/sent", name="sent_msg")
+     **/
+    public function sentAction(Request $request){
+    	$em = $this->getDoctrine()->getManager();
+    	$user= $this->get('security.context')->getToken()->getUser();
+    	$query = $em->createQuery(
+    		'SELECT h
+    		FROM AppBundle:Header h
+    		WHERE h.userfrom = :user
+    		ORDER BY h.created ASC'
+    			)->setParameter('user', $user);
+    
+    			$heads = $query->getResult();
+    
+    			return $this->render('message/sent.html.twig', array(
+    					'heads' => $heads,
+    			));
+    }
+    
+    /**
      * @Route("message/show/{id}", name="show_msg")
      **/
     public function showAction(Request $request, $id){
