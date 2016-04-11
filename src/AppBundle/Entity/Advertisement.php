@@ -61,6 +61,12 @@ class Advertisement
 	protected $type;
 	
 	/**
+	 * @ORM\ManyToOne(targetEntity="AdvCond", inversedBy="advertisements")
+	 * @ORM\JoinColumn(name="condition_id", referencedColumnName="id")
+	 */
+	protected $condition;
+	
+	/**
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="advertisements")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
@@ -367,5 +373,28 @@ class Advertisement
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set condition
+     *
+     * @param \AppBundle\Entity\AdvCond $condition
+     * @return Advertisement
+     */
+    public function setCondition(\AppBundle\Entity\AdvCond $condition = null)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return \AppBundle\Entity\AdvCond 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
     }
 }

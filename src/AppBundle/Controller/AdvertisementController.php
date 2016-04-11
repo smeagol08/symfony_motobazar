@@ -96,25 +96,38 @@ class AdvertisementController extends Controller
     	$cat_id= $request->query->get('category');
     	$type_id= $request->query->get('type');
     	$loc= $request->query->get('location');
+    	$p_from= $request->query->get('p_from');
+    	$p_to= $request->query->get('p_to');
+    	$cond_id= $request->query->get('condition');
+    	
     	$em = $this->getDoctrine()->getManager();
-    	$adv = $em->getRepository('AppBundle:Advertisement')->findAllbyFilter($cat_id, $type_id, $loc);
+    	$adv = $em->getRepository('AppBundle:Advertisement')->findAllbyFilter($cat_id, $type_id, $loc, $p_from, $p_to, $cond_id);
     	
-    	$form = $this->createForm(new FilterType($em, $cat_id, $type_id, $loc));
-    	
+    	$form = $this->createForm(new FilterType($em, $cat_id, $type_id, $loc, $p_from, $p_to, $cond_id));
+    		
     	if ($request->isMethod('POST')) {
     		$form->bind($request);
-    			$cat= $type= null;
-    		if($form->get('category')->getData()!=null)
-    			$cat= $form->get('category')->getData()->getId();
-    		if($form->get('type')->getData()!=null)
-    			$type= $form->get('type')->getData()->getId();
-    		$loc= $form->get('location')->getData();
-			return $this->redirect($this->generateUrl('all_adv',  array('category' => $cat,
-																	'type' => $type,
-																	'location' => $loc
-			)));
-        }   		
-    	
+    		if ($form->isValid()) {
+	    		$cat= $type= $cond= null;
+	    		if($form->get('category')->getData()!=null)
+	    			$cat= $form->get('category')->getData()->getId();
+	    		if($form->get('type')->getData()!=null)
+	    			$type= $form->get('type')->getData()->getId();
+	    		if($form->get('condition')->getData()!=null)
+	    			$cond= $form->get('condition')->getData()->getId();
+	    		$loc= $form->get('location')->getData();
+	    		$p_from= $form->get('price_from')->getData();
+	    		$p_to= $form->get('price_to')->getData();
+				return $this->redirect($this->generateUrl('all_adv',  array('category' => $cat,
+																		'type' => $type,
+																		'location' => $loc,
+																		'p_from' => $p_from,
+																		'p_to' => $p_to,
+																		'condition' => $cond
+				)));
+    		}
+        }
+
     	return $this->render('advertisement/all.html.twig', array(
     			'form' => $form->createView(),
     			'adverts' =>  $adv,

@@ -21,7 +21,7 @@ class Photo
 	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
-	public $path;
+	protected $path;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Advertisement", inversedBy="photos")

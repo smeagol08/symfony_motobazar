@@ -61,6 +61,12 @@ class Advertisement
 	protected $type;
 	
 	/**
+	 * @ORM\ManyToOne(targetEntity="AdvCond", inversedBy="advertisements")
+	 * @ORM\JoinColumn(name="condition_id", referencedColumnName="id")
+	 */
+	protected $condition;
+	
+	/**
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="advertisements")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
@@ -83,6 +89,7 @@ class Advertisement
     public function __construct()
     {
         $this->headers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -333,5 +340,61 @@ class Advertisement
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \AppBundle\Entity\Photo $photos
+     * @return Advertisement
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \AppBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * Set condition
+     *
+     * @param \AppBundle\Entity\AdvCond $condition
+     * @return Advertisement
+     */
+    public function setCondition(\AppBundle\Entity\AdvCond $condition = null)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return \AppBundle\Entity\AdvCond 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
     }
 }
