@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+	<div class="jumbotron lay-box">
+	<h3>Odpowiedz na ogłoszenie</h3>
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+			<p>
+		        {{ form_label(form.title, 'Tytuł:') }}
+		        {{ form_errors(form.title) }}
+		        
+		        {{ form_widget(form.title) }}
+		    </p>
+		    <p>
+		        {{ form_label(form.messages, 'Wiadomość:') }}
+		        {{ form_errors(form.messages) }}
+		        {{ form_widget(form.messages) }}
+		    </p>
+		{{ form_end(form) }}
+	</div>
+{% endblock body %}

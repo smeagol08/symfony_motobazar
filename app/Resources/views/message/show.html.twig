@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% if (head.userfrom.username == app.user.username) %}
+	{% set interlocutor= head.userto.username %}
+{% else %}
+	{% set interlocutor= head.userfrom.username %}
+{% endif %}
+
+{% block body %}
+	<div class="container">
+		{{ head.title }}
+		<table class="table table-hover">
+    	<tbody>
+			{% for msg in head.messages %}
+				{% if ((head.userfrom.username == app.user.username and msg.isfromsender == true) or (head.userto.username == app.user.username and msg.isfromsender == false)) %}
+					<tr><td></td><td><div class="bubble me">{{ msg.content}}</div></td></div><td><div class="me-name">{{ app.user.username }}</br>{{ msg.created|date("m/d/Y H:i") }}</div></td></tr>
+				{% else %}
+					<tr><td><div class="you-name">{{ interlocutor }}</br>{{ msg.created|date("m/d/Y H:i") }}</td></div><td><div class="bubble you">{{ msg.content}}</div></td><td></td></tr>
+				{% endif %}
+			{% endfor %}
+			</tbody>
+			</table>
+			{{ form_start(form) }}
+	    	{{ form_errors(form) }}
+	    	{{ form_end(form) }}
+		
+	</div>
+{% endblock body %}

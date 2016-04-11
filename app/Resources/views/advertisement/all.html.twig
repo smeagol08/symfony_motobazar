@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+		{{ form_start(form) }}
+	    {{ form_errors(form) }}
+	        {{ form_label(form.category, 'Kategoria:') }}
+	        {{ form_errors(form.category) }}      
+	        {{ form_widget(form.category) }}
+	        {{ form_label(form.type, 'Typ:') }}
+	        {{ form_errors(form.type) }}      
+	        {{ form_widget(form.type) }}
+	       	{{ form_label(form.location, 'Lokalizacja:') }}
+	        {{ form_errors(form.location) }}      
+	        {{ form_widget(form.location) }}
+	    {{ form_end(form) }} 
+  <h3>Wszystkie</h3>       
+  <table class="table">
+    <thead>
+      <tr>
+        <th>MINIATURKA</th>     
+        <th>DODANO</th>
+        <th>TYTUŁ</th>
+        <th>KATEGORIA</th>
+        <th>TYP</th>
+        <th>CENA</th>
+        <th>LOKALIZACJA</th>
+        <th>DODAŁ</th>
+      </tr>
+    </thead>
+    <tbody>
+		{% for ad in adverts %}
+		<tr>
+			{% for ph in ad.photos %}
+					 {% if loop.first %}
+						<td style= "align: center"><img src="{{ ph.getWebPath |  imagine_filter('my_thumb') }}"/></td>
+					{% endif %}
+				{% endfor %}
+			<td>{{ ad.created|date("m/d/Y") }}</td>
+			<td><a href="{{ path('show_adv', { 'id': ad.id }) }}">{{ ad.title }}</a></td>
+			<td>{{ ad.category }}</td>
+			<td>{{ ad.type }}</td>
+			<td>{{ ad.price }}</td>
+			<td>{{ ad.location }}</td>
+			<td>
+				<ul class="nav nav-pills">
+					<li class="dropdown">
+			  			<a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ ad.user}}</a>
+			  			<ul class="dropdown-menu" id="menu1">
+			   				 <li><a href="{{ path('new_msg', { 'id': ad.id }) }}">Odpowiedz</a></li>
+			  			</ul>
+					</li>	
+				</ul>	
+			</td>
+		</tr>
+   		{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock body %}

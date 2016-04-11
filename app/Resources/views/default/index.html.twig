@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{{ parent() }}
+	
+	{#}
+	<ul class="nav nav-pills">
+		<li class="dropdown">
+		  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Category <b class="caret"></b></a>
+		  <ul class="dropdown-menu" id="menu1">
+		    <li><a href="#">All</a></li>
+		    <li class="divider"></li>
+		    {% for cat in cats %}
+				<li><a href="{{ path('all_adv', { 'cat_id': cat.id }) }}">{{ cat.name}}</a></td></li>		{# {{ path('advertisements', { 'id': cat.id }) }} 
+			{% endfor %}	
+		  </ul>
+		</li>
+	</ul>
+	<ul class="nav nav-pills">
+		<li class="dropdown">
+		  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Category <b class="caret"></b></a>
+		  <ul class="dropdown-menu" id="menu1">
+		    <li><a href="#">All</a></li>
+		    <li class="divider"></li>
+		    {% for type in types %}
+				<li><a href="{{ path('all_adv', { 'type_id': type.id }) }}">{{ type.name}}</a></td></li>		{# {{ path('advertisements', { 'id': cat.id }) }} 
+			{% endfor %}	
+		  </ul>
+		</li>
+	</ul>
+	#}
+	{#<a href="{{ path('all_adv', { 'type_id': selected_type }, { 'cat_id': selected_cat }) }}">search</a> #}
+{# subcategory menu
+<ul class="nav nav-pills">
+	<li class="dropdown">
+	  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown <b class="caret"></b></a>
+	  <ul class="dropdown-menu" id="menu1">
+		  {% for cat in cats %}
+		    <li>
+		        <a href="#">{{ cat.name}}<i class="icon-arrow-right"></i></a>
+		        <ul class="dropdown-menu sub-menu">
+		            <li><a href="#">SubCat1</a></li>
+		            <li><a href="#">SubCat2</a></li>
+		            <li><a href="#">SubCat3</a></li>    
+		        </ul>
+		    </li>
+		  {% endfor %}	
+	  </ul>
+	</li>
+</ul>
+
+#}
+
+
+
+
+{% endblock body %}

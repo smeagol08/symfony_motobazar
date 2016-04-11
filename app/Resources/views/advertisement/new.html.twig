@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+	<script type="text/javascript">
+	var $collectionHolder;
+	
+	//setup an "add a photo" link
+	var $addphotoLink = $('<a href="#" class="add_photo_link">Add a photo</a>');
+	var $newLinkLi = $('<li></li>').append($addphotoLink);
+	
+	jQuery(document).ready(function() {
+	    // Get the ul that holds the collection of photos
+	    $collectionHolder = $('ul.photos');
+	
+	    // add a delete link to all of the existing photo form li elements
+	    $collectionHolder.find('li').each(function() {
+	        addPhotoFormDeleteLink($(this));
+	    });
+	 // add the "add a photo" anchor and li to the photos ul
+	 $collectionHolder.append($newLinkLi);
+	
+	 // count the current form inputs we have (e.g. 2), use that as the new
+	 // index when inserting a new item (e.g. 2)
+	 $collectionHolder.data('index', $collectionHolder.find(':input').length);
+	
+	 $addphotoLink.on('click', function(e) {
+	     // prevent the link from creating a "#" on the URL
+	     e.preventDefault();
+	
+	     // add a new photo form (see next code block)
+	     addphotoForm($collectionHolder, $newLinkLi);
+	 });
+	});
+	
+	function addphotoForm($collectionHolder, $newLinkLi) {
+	    // Get the data-prototype explained earlier
+	    var prototype = $collectionHolder.data('prototype');
+	
+	    // get the new index
+	    var index = $collectionHolder.data('index');
+	
+	    // Replace '__name__' in the prototype's HTML to
+	    // instead be a number based on how many items we have
+	    var newForm = prototype.replace(/__name__/g, index);
+	
+	    // increase the index with one for the next item
+	    $collectionHolder.data('index', index + 1);
+	
+	    // Display the form in the page in an li, before the "Add a photo" link li
+	    var $newFormLi = $('<li></li>').append(newForm);
+	    $newLinkLi.before($newFormLi);
+	
+	 // add a delete link to the new form
+	    addPhotoFormDeleteLink($newFormLi);
+	}
+	
+	function addPhotoFormDeleteLink($photoFormLi) {
+	    var $removeFormA = $('<a href="#">delete this photo</a>');
+	    $photoFormLi.append($removeFormA);
+	
+	    $removeFormA.on('click', function(e) {
+	        // prevent the link from creating a "#" on the URL
+	        e.preventDefault();
+	
+	        // remove the li for the photo form
+	        $photoFormLi.remove();
+	    });
+	}
+	</script>
+	<div class="jumbotron lay-box">
+		<h3>Dodaj nowe ogłoszenie</h3>
+		{{ form_start(form) }}
+	    {{ form_errors(form) }}
+		<p>
+	        {{ form_label(form.title, 'Tytuł:') }}
+	        {{ form_errors(form.title) }}      
+	        {{ form_widget(form.title) }}
+	    </p>
+	    <p>
+	        {{ form_label(form.price, 'Cena') }}
+	        {{ form_errors(form.price) }}
+	        {{ form_widget(form.price) }}
+	    </p>
+	    
+		<p>
+	        {{ form_label(form.type, 'Typ:') }}
+	        {{ form_errors(form.type) }}
+	        {{ form_widget(form.type) }}
+	    </p>
+	    
+	    <p>
+	        {{ form_label(form.category, 'Kategoria:') }}
+	        {{ form_errors(form.category) }}
+	        {{ form_widget(form.category) }}
+	    </p>
+	    <p>
+	        {{ form_label(form.location, 'Lokazlizacja:') }}
+	        {{ form_errors(form.location) }}
+	        {{ form_widget(form.location) }}
+	    </p>
+	    <p>
+	        {{ form_label(form.description, 'Opis:') }}
+	        {{ form_errors(form.description) }}
+	        {{ form_widget(form.description) }}
+	    </p>
+	    <p>
+	    	<ul class="photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+		        {# iterate over each existing photo and render its only field: name #}
+		        {% for photo in form.photos %}
+		            <li>{{ form_row(photo.file) }}</li>
+		        {% endfor %}
+    		</ul>
+    	</p>
+		{{ form_end(form) }}
+	</div>
+{% endblock body %}

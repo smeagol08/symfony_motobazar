@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	
+  <h3>Wiadomości otrzymane</h3>       
+  <table class="table">
+    <thead>
+      <tr>
+        <th>DATA</th>
+        <th>TYTUŁ</th>
+        <th>ODNOŚNIE</th>
+        <th>UŻYTKOWNIK</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+		{% for head in heads %}
+		<tr>
+			<td>{{ head.created|date('m-d-Y H:i') }}</td>
+			<td>{{ head.title }}</a></td>
+			<td><a href="{{ path('show_adv', { 'id': head.advertisement.id }) }}">{{ head.advertisement.title }}</a></td>
+			<td>{{ head.userfrom.username }}</td>
+			<td><a href="{{ path('show_msg', { 'id': head.id }) }}">zobacz</a></td>
+		</tr>
+   		{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock body %}

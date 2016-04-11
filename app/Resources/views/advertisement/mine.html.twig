@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+<div class="container">
+  <h3>Moje ogłoszenia</h3>       
+  <table class="table">
+    <thead>
+      <tr>
+        <th>DODANO</th>
+        <th>TYTUŁ</th>
+        <th>KATEGORIA</th>
+        <th>TYP</th>
+        <th>CENA</th>
+        <th>LOKALIZACJA</th>
+      </tr>
+    </thead>
+    <tbody>
+		{% for ad in adverts %}
+		<tr>
+			<td>{{ ad.created|date("m/d/Y") }}</td>
+			<td>{{ ad.title }}</td>
+			<td>{{ ad.category }}</td>
+			<td>{{ ad.type }}</td>
+			<td>{{ ad.price }}</td>
+			<td>{{ ad.location }}</td>
+		</tr>
+   		{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock body %}
