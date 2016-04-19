@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\AdvCat;
 use AppBundle\Entity\AdvType;
+use AppBundle\Entity\Advertisement;
 
 class DefaultController extends Controller
 {
@@ -17,12 +18,10 @@ class DefaultController extends Controller
     {
     	
     	$em = $this->getDoctrine()->getManager();
-    	$cats = $em->getRepository('AppBundle:AdvCat')->findAll();
-    	$types = $em->getRepository('AppBundle:AdvType')->findAll();
+    	$ads = $em->getRepository('AppBundle:Advertisement')->findNewest(6);
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        	'cats' => $cats,
-        	'types' => $types,
+        	"adverts" => $ads,
         ));
     }
 

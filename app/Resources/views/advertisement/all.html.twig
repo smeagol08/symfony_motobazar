@@ -38,23 +38,30 @@
 		<div class="col-md-10">
 		  <h3>Ogłoszenia:</h3>       
 		  <table class="table table-striped">
-
 		    <tbody>
 				{% for ad in adverts %}
-				<tr >
+				<tr>
 					{% for ph in ad.photos %}
 							{% if loop.first %}
-								<td><img src="{{ ph.getWebPath |  imagine_filter('my_thumb') }}"/></td>
+								<td style="width: 90px"><a href="{{ path('show_adv', { 'id': ad.id }) }}"><img src="{{ ph.getWebPath |  imagine_filter('my_thumb') }}"/></a></td>
 							{% endif %}
 						{% endfor %}
-					<td><a href="{{ path('show_adv', { 'id': ad.id }) }}">{{ ad.title }}</a></td>
-					<td>{{ ad.created|date("m/d/Y") }}</td>
-					<td>{{ ad.category }}</td>
-					<td>{{ ad.condition }}</td>
-					<td>{{ ad.price }}</td>
-					<td>{{ ad.user}}</td>
-					<td>{{ ad.type }}</td>		
-					<td>{{ ad.location }}</td>
+					<td style="vertical-align: middle;">
+					<div classs="container-fluid">
+						<div class="row">
+						  <div class="col-xs-12 col-sm-6 col-md-8"><a href="{{ path('show_adv', { 'id': ad.id }) }}">{{ ad.title }}</a></div>
+						  <div class="col-xs-6 col-md-4">{{ ad.created|date("m/d/Y") }}</div>
+						</div>
+						<div class="row">
+						  <div class="col-xs-6 col-sm-4">{{ ad.price }}</div>
+						  <div class="col-xs-6 col-sm-4">{{ ad.condition }}</div>
+							<div class="col-xs-6 col-sm-4">{{ ad.location }}</div>
+
+						</div>
+					</div>
+					
+			
+					</td>
 
 				</tr>
 		   		{% endfor %}

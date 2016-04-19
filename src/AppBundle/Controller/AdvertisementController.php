@@ -25,33 +25,36 @@ class AdvertisementController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
-	$em = $this->getDoctrine()->getManager();
-	
-		$adv = new Advertisement();
-		 
-		$phot = new Photo();
-		$phot->setAdvertisement($adv);
-		$adv->getPhotos()->add($phot);
-		 
-		$adv->setTitle('');
-		$adv->setDescription('');
-		$adv->setUser($this->get('security.context')->getToken()->getUser());
-		$adv->setCreated(new \DateTime('now'));
-		 
-		$form = $this->createForm(new AdvertisementType(), $adv);
-		if ($request->isMethod('POST')) {
-			$form->bind($request);
-	
-			if ($form->isValid()) {
-				$em->persist($adv);
-				$em->flush();
-				return $this->redirectToRoute('new_adv');
+		if( $this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+			$em = $this->getDoctrine()->getManager();		
+			$adv = new Advertisement();
+			 
+			$phot = new Photo();
+			$phot->setAdvertisement($adv);
+			$adv->getPhotos()->add($phot);
+			 
+			$adv->setTitle('');
+			$adv->setDescription('');
+			$adv->setUser($this->get('security.context')->getToken()->getUser());
+			$adv->setCreated(new \DateTime('now'));
+			 
+			$form = $this->createForm(new AdvertisementType(), $adv);
+			if ($request->isMethod('POST')) {
+				$form->bind($request);
+		
+				if ($form->isValid()) {
+					$em->persist($adv);
+					$em->flush();
+					return $this->redirectToRoute('new_adv');
+				}
 			}
+	    	 		
+	    	return $this->render('/advertisement/new.html.twig', array(
+	    			'form' => $form->createView(),
+	    	));
+		}else{
+			return $this->redirect($this->generateUrl('fos_user_security_login'));
 		}
-    	 		
-    	return $this->render('/advertisement/new.html.twig', array(
-    			'form' => $form->createView(),
-    	));
     }
 	
     /**
@@ -59,14 +62,19 @@ class AdvertisementController extends Controller
      **/
     public function mineAction(Request $request)
     {
-    	 
-    	$advRepo = $this->getDoctrine()->getRepository('AppBundle:Advertisement');
-    	$adv = $advRepo->findBy(
-    			array('user' => ($this->getUser()))
-    			);
-    	return $this->render('advertisement/mine.html.twig', array(
-    			"adverts" => $adv,
-    	));
+    	if( $this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+    		$advRepo = $this->getDoctrine()->getRepository('AppBundle:Advertisement');
+    		$adv = $advRepo->findBy(
+    				array('user' => ($this->getUser()))
+    				);
+    		return $this->render('advertisement/mine.html.twig', array(
+    				"adverts" => $adv,
+    		));
+      	}else{
+      		return $this->redirect($this->generateUrl('fos_user_security_login'));
+      	}
+    	
+
     }
 	
     /**

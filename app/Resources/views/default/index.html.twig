@@ -1,57 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{{ parent() }}
 	
-	{#}
-	<ul class="nav nav-pills">
-		<li class="dropdown">
-		  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Category <b class="caret"></b></a>
-		  <ul class="dropdown-menu" id="menu1">
-		    <li><a href="#">All</a></li>
-		    <li class="divider"></li>
-		    {% for cat in cats %}
-				<li><a href="{{ path('all_adv', { 'cat_id': cat.id }) }}">{{ cat.name}}</a></td></li>		{# {{ path('advertisements', { 'id': cat.id }) }} 
-			{% endfor %}	
-		  </ul>
-		</li>
-	</ul>
-	<ul class="nav nav-pills">
-		<li class="dropdown">
-		  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Category <b class="caret"></b></a>
-		  <ul class="dropdown-menu" id="menu1">
-		    <li><a href="#">All</a></li>
-		    <li class="divider"></li>
-		    {% for type in types %}
-				<li><a href="{{ path('all_adv', { 'type_id': type.id }) }}">{{ type.name}}</a></td></li>		{# {{ path('advertisements', { 'id': cat.id }) }} 
-			{% endfor %}	
-		  </ul>
-		</li>
-	</ul>
-	#}
-	{#<a href="{{ path('all_adv', { 'type_id': selected_type }, { 'cat_id': selected_cat }) }}">search</a> #}
-{# subcategory menu
-<ul class="nav nav-pills">
-	<li class="dropdown">
-	  <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown <b class="caret"></b></a>
-	  <ul class="dropdown-menu" id="menu1">
-		  {% for cat in cats %}
-		    <li>
-		        <a href="#">{{ cat.name}}<i class="icon-arrow-right"></i></a>
-		        <ul class="dropdown-menu sub-menu">
-		            <li><a href="#">SubCat1</a></li>
-		            <li><a href="#">SubCat2</a></li>
-		            <li><a href="#">SubCat3</a></li>    
-		        </ul>
-		    </li>
-		  {% endfor %}	
-	  </ul>
-	</li>
-</ul>
-
-#}
-
-
-
+<div class="container">
+	<h3>Najnowsze ogłoszenia</h3>
+    <div class="well well-sm">
+        <strong>Wyświetl</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>Lista</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Tabela</a>
+        </div>
+    </div>
+    <div id="products" class="row list-group">
+        {% for ad in adverts %}
+	        <div class="item  col-xs-4 col-lg-4">
+	            <div class="thumbnail">
+	               {% for ph in ad.photos %}
+							{% if loop.first %}
+								<a href="{{ path('show_adv', { 'id': ad.id }) }}"><img src="{{ ph.getWebPath |  imagine_filter('newest') }}"/></a>
+							{% endif %}
+						{% endfor %}
+	                <div class="caption">
+	                    <h4 class="group inner list-group-item-heading">
+	                        {{ ad.title }}</h4>
+	                    <p class="group inner list-group-item-text">
+	                       {{ ad.category }},  {{ ad.type }}, {{ ad.condition }}</p>
+	                    <div class="row">
+	                        <div class="col-xs-12 col-md-6">
+	                            <p class="lead">
+	                               {{ ad.price }}</p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        {% endfor %}
+ 	</div>
+</div>       
+        
+	<script>
+	$(document).ready(function() {
+	    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+	    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+	});
+	</script>
 
 {% endblock body %}

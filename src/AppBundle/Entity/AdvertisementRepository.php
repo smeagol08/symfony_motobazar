@@ -42,4 +42,18 @@ class AdvertisementRepository extends EntityRepository
     	}
 	}
 	
+	public function findNewest($how_many){
+		$em = $query= $this->getEntityManager();
+		$query = $em->createQuery(
+			'SELECT a
+    		FROM AppBundle:Advertisement a
+    		ORDER BY a.created ASC'
+		);
+		
+		try {
+			return $query->setMaxResults($how_many)->getResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return null;
+		}
+	}
 }
