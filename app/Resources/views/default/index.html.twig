@@ -17,15 +17,14 @@
 	        <div class="item  col-xs-4 col-lg-4">
 	            <div class="thumbnail">
 	               {% for ph in ad.photos %}
-							{% if loop.first %}
-								<a href="{{ path('show_adv', { 'id': ad.id }) }}"><img src="{{ ph.getWebPath |  imagine_filter('newest') }}"/></a>
-							{% endif %}
-						{% endfor %}
+						{% if loop.first %}
+							<a href="{{ path('show_adv', { 'id': ad.id }) }}"><img src="{{ ph.getWebPath |  imagine_filter('newest') }}"/></a>
+						{% endif %}
+					{% endfor %}
 	                <div class="caption">
 	                    <h4 class="group inner list-group-item-heading">
 	                        {{ ad.title }}</h4>
 	                    <p class="group inner list-group-item-text">
-	                       {{ ad.category }},  {{ ad.type }}, {{ ad.condition }}</p>
 	                    <div class="row">
 	                        <div class="col-xs-12 col-md-6">
 	                            <p class="lead">

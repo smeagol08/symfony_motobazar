@@ -101,37 +101,44 @@ class AdvertisementController extends Controller
      **/
     public function allAction(Request $request)
     {
-    	$cat_id= $request->query->get('category');
-    	$type_id= $request->query->get('type');
+
     	$loc= $request->query->get('location');
     	$p_from= $request->query->get('p_from');
     	$p_to= $request->query->get('p_to');
-    	$cond_id= $request->query->get('condition');
+    	$cond_id= $request->query->get('carcondition');
+    	$make_id= $request->query->get('carmake');
+    	$model_id= $request->query->get('carmodel');
+    	$color_id= $request->query->get('color');
     	
     	$em = $this->getDoctrine()->getManager();
-    	$adv = $em->getRepository('AppBundle:Advertisement')->findAllbyFilter($cat_id, $type_id, $loc, $p_from, $p_to, $cond_id);
+    	$adv = $em->getRepository('AppBundle:Advertisement')->findAllbyFilter( $loc, $p_from, $p_to, $cond_id, $make_id, $model_id, $color_id);
     	
-    	$form = $this->createForm(new FilterType($em, $cat_id, $type_id, $loc, $p_from, $p_to, $cond_id));
+    	$form = $this->createForm(new FilterType($em, $loc, $p_from, $p_to, $cond_id, $make_id, $model_id, $color_id));
     		
     	if ($request->isMethod('POST')) {
     		$form->bind($request);
     		if ($form->isValid()) {
-	    		$cat= $type= $cond= null;
-	    		if($form->get('category')->getData()!=null)
-	    			$cat= $form->get('category')->getData()->getId();
-	    		if($form->get('type')->getData()!=null)
-	    			$type= $form->get('type')->getData()->getId();
-	    		if($form->get('condition')->getData()!=null)
-	    			$cond= $form->get('condition')->getData()->getId();
+	    		$cond= $cmake= $cmodel= $color= null;
+
+	    		if($form->get('carcondition')->getData()!=null)
+	    			$cond= $form->get('carcondition')->getData()->getId();
+	    		if($form->get('carmake')->getData()!=null)
+	    			$cmake= $form->get('carmake')->getData()->getId();
+	    		if($form->get('carmodel')->getData()!=null)
+	    			$cmodel= $form->get('carmodel')->getData()->getId();
+	    		if($form->get('color')->getData()!=null)
+	    			$color= $form->get('color')->getData()->getId();
 	    		$loc= $form->get('location')->getData();
 	    		$p_from= $form->get('price_from')->getData();
 	    		$p_to= $form->get('price_to')->getData();
-				return $this->redirect($this->generateUrl('all_adv',  array('category' => $cat,
-																		'type' => $type,
-																		'location' => $loc,
-																		'p_from' => $p_from,
-																		'p_to' => $p_to,
-																		'condition' => $cond
+				return $this->redirect($this->generateUrl('all_adv',  array('location' => $loc,
+																			'p_from' => $p_from,
+																			'p_to' => $p_to,
+																			'carcondition' => $cond,
+																			'carmodel' => $cmodel,
+																			'carmake' => $cmake,
+																			'color' => $color,
+						
 				)));
     		}
         }

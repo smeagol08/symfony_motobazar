@@ -12,21 +12,53 @@ class AdvertisementType extends AbstractType
 	
     public function buildForm(FormBuilderInterface $builder, array $options)
     {   	
-
-		$builder->add('type', 'entity', array(
-    			'class' => 'AppBundle:AdvType',
-    			'choice_label' => 'name',
+    	$builder->add('title', 'text');
+    	$builder->add('description', 'textarea');
+    	$builder->add('price', 'money', array(
+    			'currency' => 'PLN',
     	));
-		$builder->add('category', 'entity', array(
-				'class' => 'AppBundle:AdvCat',
+		$builder->add('carmake', 'entity', array(
+				'class' => 'AppBundle:CarMake',
 				'choice_label' => 'name',
 		));
-		$builder->add('title', 'text');
-		$builder->add('description', 'textarea');
-		$builder->add('price', 'money', array(
-				'currency' => 'EUR',
+		$builder->add('carmodel', 'entity', array(
+				'class' => 'AppBundle:CarModel',
+				'choice_label' => 'name',
+		));
+		$builder->add('body', 'entity', array(
+				'class' => 'AppBundle:Body',
+				'choice_label' => 'name',
+		));
+		$builder->add('color', 'entity', array(
+				'class' => 'AppBundle:Color',
+				'choice_label' => 'name',
+		));
+		$builder->add('fuel', 'entity', array(
+				'class' => 'AppBundle:Fuel',
+				'choice_label' => 'name',
+		));
+		$builder->add('gearbox', 'entity', array(
+				'class' => 'AppBundle:Gearbox',
+				'choice_label' => 'name',
+		));
+		
+		$builder->add('province', 'entity', array(
+				'class' => 'AppBundle:Province',
+				'choice_label' => 'name',
 		));
 		$builder->add('location', 'text');
+		$builder->add('carcondition', 'entity', array(
+				'class' => 'AppBundle:CarCondition',
+				'choice_label' => 'name',
+		));
+		$builder->add('body', 'entity', array(
+				'class' => 'AppBundle:Body',
+				'choice_label' => 'name',
+		));
+		$builder->add('mileage', 'text');
+		$builder->add('enginecapacity', 'text');
+		$builder->add('yearofprod', 'text');
+		$builder->add('horsepower', 'text');
 		$builder->add('photos', 'collection', array(
 				'type' => new PhotoType(),
 				'allow_add' => true,

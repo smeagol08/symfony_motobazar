@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="advtype")
+ * @ORM\Table(name="fuel")
  */
-class AdvType
+class Fuel
 { 
 	/**
       * @ORM\Id
@@ -15,17 +15,18 @@ class AdvType
       * @ORM\GeneratedValue(strategy="AUTO")
       */
 	protected $id;
-	
 	/**
-	 * @ORM\Column(type="string", length=10)
+	 * @ORM\Column(type="string", length=25)
 	 */
 	protected $name;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="type")
+	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="fuel")
 	 */
 	protected $advertisements;
-	
+
+
+
     /**
      * Constructor
      */
@@ -37,7 +38,7 @@ class AdvType
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -48,8 +49,7 @@ class AdvType
      * Set name
      *
      * @param string $name
-     *
-     * @return Advtype
+     * @return Fuel
      */
     public function setName($name)
     {
@@ -61,7 +61,7 @@ class AdvType
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -69,39 +69,37 @@ class AdvType
     }
 
     /**
-     * Add advertisement
+     * Add advertisements
      *
-     * @param \AppBundle\Entity\Advertisement $advertisement
-     *
-     * @return Advtype
+     * @param \AppBundle\Entity\Advertisement $advertisements
+     * @return Fuel
      */
-    public function addAdvertisement(\AppBundle\Entity\Advertisement $advertisement)
+    public function addAdvertisement(\AppBundle\Entity\Advertisement $advertisements)
     {
-        $this->advertisements[] = $advertisement;
+        $this->advertisements[] = $advertisements;
 
         return $this;
     }
 
     /**
-     * Remove advertisement
+     * Remove advertisements
      *
-     * @param \AppBundle\Entity\Advertisement $advertisement
+     * @param \AppBundle\Entity\Advertisement $advertisements
      */
-    public function removeAdvertisement(\AppBundle\Entity\Advertisement $advertisement)
+    public function removeAdvertisement(\AppBundle\Entity\Advertisement $advertisements)
     {
-        $this->advertisements->removeElement($advertisement);
+        $this->advertisements->removeElement($advertisements);
     }
 
     /**
      * Get advertisements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAdvertisements()
     {
         return $this->advertisements;
     }
-    
     public function __toString()
     {
     	return $this->name;

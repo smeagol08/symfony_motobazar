@@ -1,36 +1,90 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<script>
+$(document).ready(function(){
+
+	(function( $ ){
+	    $.fn.loadModels = function() {
+		    var $selected= $(this).val();
+		    if($selected){
+		    	$('#filtertype_carmodel').prop('disabled', false);
+	        $.ajax({
+	               method: "GET",
+	               url: "{{ path('homepage') }}ajax/makes/"+$selected,
+	               
+	             })
+	           .done(function( carmodels ) {
+	               var options = "";
+	               $.each(carmodels, function() {
+	                   $.each(this, function(i, carmodel) {             
+	                	   options += "<option value='" + carmodel['id'] + "'>" + carmodel["name"] + "</option>";               
+	                   });
+	                 });
+	               $( '#filtertype_carmodel' ).html(options);               
+	           });
+	    	}else{
+	    		$('#filtertype_carmodel').prop('value' , null);
+	    		$('#filtertype_carmodel').prop('disabled', true);
+
+		    }
+	    	};
+
+	 })( jQuery );
+	 
+	$('#filtertype_carmake').loadModels();
+	
+	$( '#filtertype_carmake' ).change(function() {
+		$('#filtertype_carmake').loadModels();		
+	});
+	
+
+	
+});
+
+</script>
 
 <div class="container">
 	 <div class="row">
         <div class="col-md-2">
+        
+        
+        
         <h4>Opcje filtrowania</h4>
 		{{ form_start(form) }}
 	    {{ form_errors(form) }}
-	        {{ form_label(form.category, 'Kategoria:') }}
-	        {{ form_errors(form.category) }}      
-	        {{ form_widget(form.category) }}
 	        
-	        {{ form_label(form.type, 'Typ:') }}
-	        {{ form_errors(form.type) }}      
-	        {{ form_widget(form.type) }}
+	       	{{ form_label(form.carmake, 'Marka:') }}
+	       	{{ form_errors(form.carmake) }}      
+	        {{ form_widget(form.carmake) }}
 	        
-	        {{ form_label(form.condition, 'Stan:') }}
-	       	{{ form_errors(form.condition) }}      
-	        {{ form_widget(form.condition) }}
+	        {{ form_label(form.carmodel, 'Model:') }}
+	       	{{ form_errors(form.carmodel) }}      
+	        {{ form_widget(form.carmodel) }}
 	        
-	        {{ form_label(form.location, 'Lokalizacja:') }}
+
+			        {{ form_label(form.price_from, 'Cena od - do:') }}
+			        {{ form_errors(form.price_from) }}      
+			        {{ form_widget(form.price_from) }}
+
+	       			{{ form_errors(form.price_to) }}      
+					{{ form_widget(form.price_to) }}
+
+	        
+	       
+	        
+	        {{ form_label(form.carcondition, 'Stan:') }}
+	       	{{ form_errors(form.carcondition) }}      
+	        {{ form_widget(form.carcondition) }}
+	        
+	        {{ form_label(form.location, 'Miejscowość:') }}
 	        {{ form_errors(form.location) }}      
 	        {{ form_widget(form.location) }}
 	        
-	       	{{ form_label(form.price_from, 'Cena od:') }}
-	        {{ form_errors(form.price_from) }}      
-	        {{ form_widget(form.price_from) }}
-	        
-	        {{ form_label(form.price_to, 'Cena do:') }}
-	       	{{ form_errors(form.price_to) }}      
-	        {{ form_widget(form.price_to) }}
+	        {{ form_label(form.color, 'Kolor:') }}
+	        {{ form_errors(form.color) }}      
+	        {{ form_widget(form.color) }}
+
 	        
 
 	    {{ form_end(form) }} 
@@ -54,7 +108,7 @@
 						</div>
 						<div class="row">
 						  <div class="col-xs-6 col-sm-4">{{ ad.price }}</div>
-						  <div class="col-xs-6 col-sm-4">{{ ad.condition }}</div>
+						  <div class="col-xs-6 col-sm-4">{{ ad.carcondition }}</div>
 							<div class="col-xs-6 col-sm-4">{{ ad.location }}</div>
 
 						</div>

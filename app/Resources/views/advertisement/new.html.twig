@@ -71,46 +71,102 @@
 		<h3>Dodaj nowe ogłoszenie</h3>
 		{{ form_start(form) }}
 	    {{ form_errors(form) }}
-		<p>
-	        {{ form_label(form.title, 'Tytuł:') }}
-	        {{ form_errors(form.title) }}      
-	        {{ form_widget(form.title) }}
-	    </p>
-	    <p>
-	        {{ form_label(form.price, 'Cena') }}
-	        {{ form_errors(form.price) }}
-	        {{ form_widget(form.price) }}
-	    </p>
-	    
-		<p>
-	        {{ form_label(form.type, 'Typ:') }}
-	        {{ form_errors(form.type) }}
-	        {{ form_widget(form.type) }}
-	    </p>
-	    
-	    <p>
-	        {{ form_label(form.category, 'Kategoria:') }}
-	        {{ form_errors(form.category) }}
-	        {{ form_widget(form.category) }}
-	    </p>
-	    <p>
-	        {{ form_label(form.location, 'Lokazlizacja:') }}
-	        {{ form_errors(form.location) }}
-	        {{ form_widget(form.location) }}
-	    </p>
-	    <p>
+		<div class="row">
+			<div class="col-xs-12 col-md-6">	        
+		  		{{ form_label(form.title, 'Tytuł:') }}
+		        {{ form_errors(form.title) }}      
+		        {{ form_widget(form.title) }}</div>
+		  	<div class="col-xs-6 col-md-3">
+		  		{{ form_label(form.price, 'Cena:') }}
+		        {{ form_errors(form.price) }}
+		        {{ form_widget(form.price) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3">
+		  		{{ form_label(form.yearofprod, 'Rok produkcji:') }}
+		        {{ form_errors(form.yearofprod) }}
+		        {{ form_widget(form.yearofprod) }}
+		  	</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-md-3"> 
+			  	{{ form_label(form.carmake, 'Marka:') }}
+		        {{ form_errors(form.carmake) }}
+		        {{ form_widget(form.carmake) }}
+		    </div>
+		  	<div class="col-xs-6 col-md-3">
+		  		{{ form_label(form.carmodel, 'Model:') }}
+	        	{{ form_errors(form.carmodel) }}
+	        	{{ form_widget(form.carmodel) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3">
+		  		{{ form_label(form.body, 'Typ nadwozia:') }}
+	        	{{ form_errors(form.body) }}
+	        	{{ form_widget(form.body) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3"> 
+		        {{ form_label(form.carcondition, 'Stan techniczny:') }}
+		        {{ form_errors(form.carcondition) }}
+		        {{ form_widget(form.carcondition) }}
+		    </div>
+		</div>
+		
+		<div class="row">
+		  	<div class="col-xs-6 col-md-3">
+	        	{{ form_label(form.enginecapacity, 'Pojemność silnika:') }}
+	       		{{ form_errors(form.enginecapacity) }}
+	        	{{ form_widget(form.enginecapacity) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3">
+		        {{ form_label(form.horsepower, 'Moc silnika:') }}
+		        {{ form_errors(form.horsepower) }}
+		        {{ form_widget(form.horsepower) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3">
+		        {{ form_label(form.fuel, 'Paliwo:') }}
+		        {{ form_errors(form.fuel) }}
+		        {{ form_widget(form.fuel) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3"> 
+		        {{ form_label(form.gearbox, 'Skrzynia biegów:') }}
+		        {{ form_errors(form.gearbox) }}
+		        {{ form_widget(form.gearbox) }}
+		    </div>
+		</div>	
+		<div class="row">
+		  	<div class="col-xs-6 col-md-3">
+		        {{ form_label(form.mileage, 'Przebieg:') }}
+		        {{ form_errors(form.mileage) }}
+		        {{ form_widget(form.mileage) }}
+		  	</div>
+			<div class="col-xs-6 col-md-3"> 
+		        {{ form_label(form.color, 'Kolor:') }}
+		        {{ form_errors(form.color) }}
+		        {{ form_widget(form.color) }}
+		    </div>
+		  	<div class="col-xs-6 col-md-3">
+		        {{ form_label(form.province, 'Województwo:') }}
+		        {{ form_errors(form.province) }}
+		        {{ form_widget(form.province) }}
+		  	</div>
+		  	<div class="col-xs-6 col-md-3">
+		        {{ form_label(form.location, 'Miejscowość:') }}
+		        {{ form_errors(form.location) }}
+		        {{ form_widget(form.location) }}
+		  	</div>
+		</div>
+		<div>
 	        {{ form_label(form.description, 'Opis:') }}
 	        {{ form_errors(form.description) }}
 	        {{ form_widget(form.description) }}
-	    </p>
-	    <p>
+	    </div>
+	    <div>
 	    	<ul class="photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
 		        {# iterate over each existing photo and render its only field: name #}
 		        {% for photo in form.photos %}
 		            <li>{{ form_row(photo.file) }}</li>
 		        {% endfor %}
     		</ul>
-    	</p>
+    	</div>
 		{{ form_end(form) }}
 	</div>
 {% endblock body %}
