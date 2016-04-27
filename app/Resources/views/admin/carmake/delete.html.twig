@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+	<div class="jumbotron lay-box">
+	<h3>Usuń markę</h3>
+	<p>Uwaga! Usuwając markę usuniesz także wszystkie powiązanie z nią modele!</p>
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		        {{ form_label(form.name, 'Marka:') }}
+		        {{ form_errors(form.name) }}		        
+		        {{ form_widget(form.name) }}
+
+		{{ form_end(form) }}
+	</div>
+{% endblock body %}

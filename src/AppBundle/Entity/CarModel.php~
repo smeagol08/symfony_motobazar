@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="carmake")
+ * @ORM\Table(name="carmodel")
  */
-class CarMake
+class CarModel
 { 
 	/**
       * @ORM\Id
@@ -21,14 +21,16 @@ class CarMake
 	protected $name;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="carmake")
+	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="carmodel")
 	 */
 	protected $advertisements;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="CarModel", mappedBy="carmake", cascade={"persist", "remove"})
+	 * @ORM\ManyToOne(targetEntity="CarMake", inversedBy="carmodels")
+	 * @ORM\JoinColumn(name="carmake_id", referencedColumnName="id")
 	 */
-	protected $carmodels;
+	protected $carmake;
+	
 
     /**
      * Constructor
@@ -36,7 +38,6 @@ class CarMake
     public function __construct()
     {
         $this->advertisements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->carmodels = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -53,7 +54,7 @@ class CarMake
      * Set name
      *
      * @param string $name
-     * @return CarMake
+     * @return CarModel
      */
     public function setName($name)
     {
@@ -76,7 +77,7 @@ class CarMake
      * Add advertisements
      *
      * @param \AppBundle\Entity\Advertisement $advertisements
-     * @return CarMake
+     * @return CarModel
      */
     public function addAdvertisement(\AppBundle\Entity\Advertisement $advertisements)
     {
@@ -110,35 +111,25 @@ class CarMake
     }
 
     /**
-     * Add carmodels
+     * Set carmake
      *
-     * @param \AppBundle\Entity\CarModel $carmodels
-     * @return CarMake
+     * @param \AppBundle\Entity\CarMake $carmake
+     * @return CarModel
      */
-    public function addCarmodel(\AppBundle\Entity\CarModel $carmodels)
+    public function setCarmake(\AppBundle\Entity\CarMake $carmake = null)
     {
-        $this->carmodels[] = $carmodels;
+        $this->carmake = $carmake;
 
         return $this;
     }
 
     /**
-     * Remove carmodels
+     * Get carmake
      *
-     * @param \AppBundle\Entity\CarModel $carmodels
+     * @return \AppBundle\Entity\CarMake 
      */
-    public function removeCarmodel(\AppBundle\Entity\CarModel $carmodels)
+    public function getCarmake()
     {
-        $this->carmodels->removeElement($carmodels);
-    }
-
-    /**
-     * Get carmodels
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCarmodels()
-    {
-        return $this->carmodels;
+        return $this->carmake;
     }
 }

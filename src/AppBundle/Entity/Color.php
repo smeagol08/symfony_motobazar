@@ -25,8 +25,6 @@ class Color
 	 */
 	protected $advertisements;
 
-
-
     /**
      * Constructor
      */

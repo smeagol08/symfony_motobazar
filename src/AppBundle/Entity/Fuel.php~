@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="carmake")
+ * @ORM\Table(name="fuel")
  */
-class CarMake
+class Fuel
 { 
 	/**
       * @ORM\Id
@@ -21,14 +21,11 @@ class CarMake
 	protected $name;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="carmake")
+	 * @ORM\OneToMany(targetEntity="Advertisement", mappedBy="fuel")
 	 */
 	protected $advertisements;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="CarModel", mappedBy="carmake", cascade={"persist", "remove"})
-	 */
-	protected $carmodels;
+
 
     /**
      * Constructor
@@ -36,7 +33,6 @@ class CarMake
     public function __construct()
     {
         $this->advertisements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->carmodels = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -53,7 +49,7 @@ class CarMake
      * Set name
      *
      * @param string $name
-     * @return CarMake
+     * @return Fuel
      */
     public function setName($name)
     {
@@ -76,7 +72,7 @@ class CarMake
      * Add advertisements
      *
      * @param \AppBundle\Entity\Advertisement $advertisements
-     * @return CarMake
+     * @return Fuel
      */
     public function addAdvertisement(\AppBundle\Entity\Advertisement $advertisements)
     {
@@ -107,38 +103,5 @@ class CarMake
     public function __toString()
     {
     	return $this->name;
-    }
-
-    /**
-     * Add carmodels
-     *
-     * @param \AppBundle\Entity\CarModel $carmodels
-     * @return CarMake
-     */
-    public function addCarmodel(\AppBundle\Entity\CarModel $carmodels)
-    {
-        $this->carmodels[] = $carmodels;
-
-        return $this;
-    }
-
-    /**
-     * Remove carmodels
-     *
-     * @param \AppBundle\Entity\CarModel $carmodels
-     */
-    public function removeCarmodel(\AppBundle\Entity\CarModel $carmodels)
-    {
-        $this->carmodels->removeElement($carmodels);
-    }
-
-    /**
-     * Get carmodels
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCarmodels()
-    {
-        return $this->carmodels;
     }
 }

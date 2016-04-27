@@ -10,7 +10,7 @@ class PhotoType extends AbstractType
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('file', 'file');
+		$builder->add('file', 'file', array('label' => false));
 	}
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -63,8 +63,8 @@
 		                <li class="dropdown {% if app.request.get('_route') == 'recived_msg' or app.request.get('_route') == 'sent_msg' %}active{% endif %}">
 		                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Wiadomości<b class="caret"></b></a>
 		                    <ul role="menu" class="dropdown-menu">
-		                        <li><a href="{{ path('recived_msg') }}">Otrzymane</a></li>
-		                        <li><a href="{{ path('sent_msg') }}">Wysłane</a></li>
+		                        <li><a href="{{ path('recived_msg') }}">Zapytania do Ciebie</a></li>
+		                        <li><a href="{{ path('sent_msg') }}">Twoje zapytania</a></li>
 		                        <li class="divider"></li>
 		                        <li><a href="#">Kosz</a></li>
 		                    </ul>
@@ -80,9 +80,21 @@
 		                    </ul>
 		                </li>
 		            </ul>
-
 		            <ul class="nav navbar-nav navbar-right">
 		            	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+							{% if is_granted('ROLE_ADMIN') %}
+							<li class="dropdown" >
+		                    	<a data-toggle="dropdown" class="dropdown-toggle" href="#">AdminPanel<b class="caret"></b></a>
+		                    	<ul role="menu" class="dropdown-menu">
+		                    		<li><a href="{{ path('dbo') }}">Operacje na bazie</a></li>	                  
+		                        	<li><a href="">Ogłoszenia</a></li>
+		                        	<li><a href="">Użytkownicy</a></li>
+		                        	<li><a href="">Reklamy</a></li>
+		                    	</ul>
+		                	</li>
+							{% endif %}
+
+		            		
 		            		<li class="dropdown {% if app.request.get('_route')=='fos_user_profile_show' or app.request.get('_route')=='fos_user_profile_edit' or app.request.get('_route')== 'fos_user_change_password'%}active{% endif %}">
 		                    	<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ app.user.username }} <b class="caret"></b></a>
 		                    	<ul role="menu" class="dropdown-menu">

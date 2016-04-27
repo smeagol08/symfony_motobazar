@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+	<div class="jumbotron lay-box">
+	<h3>Dostępne operacje:</h3>
+		<h4>Kolor</h4>
+		<a href="{{ path('new_color')}}">Dodaj nowy kolor</a><br>
+		<a href="{{ path('delete_color')}}">Usuń kolor</a>
+		<h4>Marka</h4>
+		<a href="{{ path('new_carmake')}}">Dodaj nową markę</a><br>
+		<a href="{{ path('delete_carmake')}}">Usuń markę</a>
+		<h4>Model</h4>
+		<a href="{{ path('new_carmodel')}}">Dodaj nowy model</a><br>
+		<a href="{{ path('delete_carmodel')}}">Usuń model</a>
+	</div>
+{% endblock body %}

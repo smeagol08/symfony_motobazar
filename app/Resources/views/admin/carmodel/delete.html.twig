@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+<script>
+$(document).ready(function(){
+
+	(function( $ ){
+	    $.fn.loadModels = function() {
+		    var $selected= $(this).val();
+		    if($selected){
+		    	$('#selectmodeltype_carmodel').prop('disabled', false);
+	        $.ajax({
+	               method: "GET",
+	               url: "{{ path('homepage') }}ajax/makes/"+$selected,
+	               
+	             })
+	           .done(function( carmodels ) {
+	               var options = "";
+	               $.each(carmodels, function() {
+	                   $.each(this, function(i, carmodel) {
+		                   if(i!=0)             
+	                	   		options += "<option value='" + carmodel['id'] + "'>" + carmodel["name"] + "</option>";               
+	                   });
+	                 });
+	               $( '#selectmodeltype_carmodel' ).html(options);               
+	           });
+	    	}else{
+	    		$('#selectmodeltype_carmodel').prop('value' , null);
+	    		$('#selectmodeltype_carmodel').prop('disabled', true);
+
+		    }
+	    	};
+
+	 })( jQuery );
+	 
+	$('#selectmodeltype_carmake').loadModels();
+	
+	$( '#selectmodeltype_carmake' ).change(function() {
+		$('#selectmodeltype_carmake').loadModels();		
+	});
+	
+
+	
+});
+
+</script>
+
+
+
+	<div class="jumbotron lay-box">
+	<h3>Usuń model</h3>
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		        {{ form_label(form.carmake, 'Marka:') }}
+		        {{ form_errors(form.carmake) }}		        
+		        {{ form_widget(form.carmake) }}
+		        {{ form_label(form.carmodel, 'Model:') }}
+		        {{ form_errors(form.carmodel) }}		        
+		        {{ form_widget(form.carmodel) }}
+
+		{{ form_end(form) }}
+	</div>
+{% endblock body %}

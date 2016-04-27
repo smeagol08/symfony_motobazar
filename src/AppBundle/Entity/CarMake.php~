@@ -26,7 +26,7 @@ class CarMake
 	protected $advertisements;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="CarModel", mappedBy="carmake", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="CarModel", mappedBy="carmake")
 	 */
 	protected $carmodels;
 
@@ -107,38 +107,5 @@ class CarMake
     public function __toString()
     {
     	return $this->name;
-    }
-
-    /**
-     * Add carmodels
-     *
-     * @param \AppBundle\Entity\CarModel $carmodels
-     * @return CarMake
-     */
-    public function addCarmodel(\AppBundle\Entity\CarModel $carmodels)
-    {
-        $this->carmodels[] = $carmodels;
-
-        return $this;
-    }
-
-    /**
-     * Remove carmodels
-     *
-     * @param \AppBundle\Entity\CarModel $carmodels
-     */
-    public function removeCarmodel(\AppBundle\Entity\CarModel $carmodels)
-    {
-        $this->carmodels->removeElement($carmodels);
-    }
-
-    /**
-     * Get carmodels
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCarmodels()
-    {
-        return $this->carmodels;
     }
 }

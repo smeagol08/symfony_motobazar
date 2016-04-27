@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+	<div class="jumbotron lay-box">
+	<h3>Dodaj markę</h3>
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		        {{ form_label(form.name, 'Marka:') }}
+		        {{ form_errors(form.name) }}		        
+		        {{ form_widget(form.name) }}
+
+		{{ form_end(form) }}
+	</div>
+{% endblock body %}

@@ -5,7 +5,7 @@
 	var $collectionHolder;
 	
 	//setup an "add a photo" link
-	var $addphotoLink = $('<a href="#" class="add_photo_link">Add a photo</a>');
+	var $addphotoLink = $('<a href="#" class="add_photo_link">Dodaj kolejne zdjęcie</a>');
 	var $newLinkLi = $('<li></li>').append($addphotoLink);
 	
 	jQuery(document).ready(function() {
@@ -48,6 +48,7 @@
 	
 	    // Display the form in the page in an li, before the "Add a photo" link li
 	    var $newFormLi = $('<li></li>').append(newForm);
+	    
 	    $newLinkLi.before($newFormLi);
 	
 	 // add a delete link to the new form
@@ -55,9 +56,9 @@
 	}
 	
 	function addPhotoFormDeleteLink($photoFormLi) {
-	    var $removeFormA = $('<a href="#">delete this photo</a>');
+	    var $removeFormA = $('<a href="#">Usuń to zdjęcie</a>');
 	    $photoFormLi.append($removeFormA);
-	
+	    
 	    $removeFormA.on('click', function(e) {
 	        // prevent the link from creating a "#" on the URL
 	        e.preventDefault();
@@ -67,6 +68,50 @@
 	    });
 	}
 	</script>
+	
+	<script>
+$(document).ready(function(){
+
+	(function( $ ){
+	    $.fn.loadModels = function() {
+		    var $selected= $(this).val();
+		    if($selected){
+		    	$('#advertisementtype_carmodel').prop('disabled', false);
+	        $.ajax({
+	               method: "GET",
+	               url: "{{ path('homepage') }}ajax/makes/"+$selected,
+	               
+	             })
+	           .done(function( carmodels ) {
+	               var options = "";
+	               $.each(carmodels, function() {
+	                   $.each(this, function(i, carmodel) {     
+		                   if(i!=0)      
+	                	   		options += "<option value='" + carmodel['id'] + "'>" + carmodel["name"] + "</option>";               
+	                   });
+	                 });
+	               $( '#advertisementtype_carmodel' ).html(options);               
+	           });
+	    	}else{
+	    		$('#advertisementtype_carmodel').prop('value' , null);
+	    		$('#advertisementtype_carmodel').prop('disabled', true);
+
+		    }
+	    	};
+
+	 })( jQuery );
+	 
+	$('#advertisementtype_carmake').loadModels();
+	
+	$( '#advertisementtype_carmake' ).change(function() {
+		$('#advertisementtype_carmake').loadModels();		
+	});
+	
+
+	
+});
+
+</script>
 	<div class="jumbotron lay-box">
 		<h3>Dodaj nowe ogłoszenie</h3>
 		{{ form_start(form) }}
@@ -160,10 +205,12 @@
 	        {{ form_widget(form.description) }}
 	    </div>
 	    <div>
-	    	<ul class="photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+	    	<ul class="photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}" style="list-style-type: none; ">
 		        {# iterate over each existing photo and render its only field: name #}
+
 		        {% for photo in form.photos %}
-		            <li>{{ form_row(photo.file) }}</li>
+		            <li><div id="imagePreview"></div>
+		            {{ form_row(photo.file) }}</li>
 		        {% endfor %}
     		</ul>
     	</div>
